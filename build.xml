@@ -26,7 +26,7 @@
     <!-- ============================================  -->
     <!-- Target: run-test                               -->
     <!-- ============================================  -->
-    <target name="run-test">
+    <target name="run-test" depends="prepare-dev-dependencies">
         <php returnProperty="php-executable" expression="PHP_BINARY" level="debug"/>
         <exec executable="${php-executable}" checkreturn="true" passthru="true">
             <arg line="vendor/phpunit/phpunit/phpunit"/>
@@ -39,7 +39,7 @@
     <!-- ============================================  -->
     <!-- Target: phar-prepare-dependencies             -->
     <!-- ============================================  -->
-    <target name="phar-prepare-dependencies">
+    <target name="phar-prepare-dependencies" depends="prepare">
         <!--install dependencies without development requirements-->
         <exec executable="composer" checkreturn="true" passthru="true">
             <arg line="--no-interaction install --no-dev --optimize-autoloader"/>
@@ -74,11 +74,10 @@
                 <include name="composer.json"/>
                 <include name="composer.lock"/>
             </fileset>
-
         </pharpackage>
     </target>
 
-    <target name="phar-sign">
+    <target name="phar-sign" depends="phar-build">
         <delete file="${build-dir}/${phing.project.name}.phar.asc"/>
         <exec executable="gpg" checkreturn="true" passthru="true">
             <arg value="--batch" />
