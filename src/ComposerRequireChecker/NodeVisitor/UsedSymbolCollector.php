@@ -7,7 +7,6 @@ namespace ComposerRequireChecker\NodeVisitor;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 
-use function array_filter;
 use function array_keys;
 use function array_map;
 
@@ -54,15 +53,15 @@ final class UsedSymbolCollector extends NodeVisitorAbstract
 
     private function recordExtendsUsage(Node $node): void
     {
-        if ($node instanceof Node\Stmt\Class_) {
-            array_map([$this, 'recordUsageOf'], array_filter([$node->extends]));
+        if ($node instanceof Node\Stmt\Class_ && $node->extends !== null) {
+            $this->recordUsageOf($node->extends);
         }
 
         if (! ($node instanceof Node\Stmt\Interface_)) {
             return;
         }
 
-        array_map([$this, 'recordUsageOf'], array_filter($node->extends));
+        array_map([$this, 'recordUsageOf'], $node->extends);
     }
 
     private function recordImplementsUsage(Node $node): void

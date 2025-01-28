@@ -67,8 +67,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testInterfaceWithoutExtends(): void
     {
-        $node          = new Interface_('Foo');
-        $node->extends = [null];
+        $node = new Interface_('Foo', ['extends' => []]);
 
         $this->visitor->enterNode($node);
 
