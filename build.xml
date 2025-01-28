@@ -20,6 +20,15 @@
     <target name="prepare">
         <echo msg="preparing build directory"/>
         <mkdir dir="${build-dir}"/>
+        <copy todir="${build-dir}">
+            <fileset dir="./">
+                <include name="src/**/*.php" />
+                <include name="bin/*" />
+                <include name="LICENSE" />
+                <include name="composer.json" />
+                <include name="composer.lock" />
+            </fileset>
+        </copy>
     </target>
 
 
@@ -41,7 +50,7 @@
     <!-- ============================================  -->
     <target name="phar-prepare-dependencies" depends="prepare">
         <!--install dependencies without development requirements-->
-        <exec executable="composer" checkreturn="true" passthru="true">
+        <exec executable="composer" dir="${build-dir}" checkreturn="true" passthru="true">
             <arg line="--no-interaction install --no-dev --optimize-autoloader"/>
         </exec>
     </target>
@@ -62,18 +71,11 @@
         <!--create the package-->
         <mkdir dir="${build-dir}" />
         <php expression="file_put_contents('bin/clistub.php', '#!/usr/bin/env php' . chr(10) . Phar::createDefaultStub('bin/composer-require-checker.php'))"/>
-        <pharpackage basedir="./"
+        <pharpackage basedir="${build-dir}"
                      destfile="${build-dir}/${phing.project.name}.phar"
                      stub="bin/clistub.php"
                      compression="gzip">
-            <fileset dir="./">
-                <include name="src/**/*.php"/>
-                <include name="bin/*"/>
-                <include name="vendor/**"/>
-                <include name="LICENSE"/>
-                <include name="composer.json"/>
-                <include name="composer.lock"/>
-            </fileset>
+            <fileset dir="${build-dir}" />
         </pharpackage>
     </target>
 
