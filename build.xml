@@ -9,10 +9,7 @@
 
 
 <project name="composer-require-checker" default="phar-build">
-
     <property name="build-dir" value="build"/>
-    <property name="phar-dir" value="build/phar"/>
-
 
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
