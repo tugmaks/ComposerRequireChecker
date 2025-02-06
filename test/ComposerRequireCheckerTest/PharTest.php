@@ -31,7 +31,6 @@ final class PharTest extends TestCase
             $this->markTestSkipped('Compiled PHAR not found');
         }
 
-        /** @psalm-suppress PossiblyFalsePropertyAssignmentValue */
         $this->oldWorkingDirectory = getcwd();
         $this->bin                 = PHP_BINARY . ' ' . escapeshellarg($phar);
     }

@@ -272,7 +272,7 @@ class CheckCommand extends Command
     private function getASTFromFilesLocator(InputInterface $input): LocateASTFromFiles
     {
         $errorHandler = $input->getOption('ignore-parse-errors') ? new CollectingErrorHandler() : null;
-        $parser       = (new ParserFactory())->createForHostVersion();
+        $parser       = (new ParserFactory())->createForNewestSupportedVersion();
 
         return new LocateASTFromFiles($parser, $errorHandler);
     }

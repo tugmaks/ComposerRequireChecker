@@ -30,9 +30,7 @@
   </file>
   <file src="test/ComposerRequireCheckerTest/Cli/OptionsTest.php">
     <MixedArgument>
-      <code><![CDATA[json_decode(file_get_contents(
-                __DIR__ . '/../../../data/config.dist.json',
-            ), true)]]></code>
+      <code><![CDATA[json_decode($fileContent, true)]]></code>
     </MixedArgument>
   </file>
   <file src="test/ComposerRequireCheckerTest/DefinedSymbolsLocator/LocateDefinedSymbolsFromASTRootsTest.php">
@@ -132,9 +130,7 @@
       <code><![CDATA[$className]]></code>
     </ArgumentTypeCoercion>
     <PossiblyNullArgument>
-      <code><![CDATA[$this->parser->parse(
-            file_get_contents((new ReflectionClass($className))->getFileName()),
-        )]]></code>
+      <code><![CDATA[$this->parser->parse($fileContent)]]></code>
       <code><![CDATA[$this->parser->parse('<?php ' . $phpSource)]]></code>
     </PossiblyNullArgument>
     <UnusedReturnValue>
@@ -158,6 +154,11 @@
     <UnusedReturnValue>
       <code><![CDATA[array<Stmt>]]></code>
     </UnusedReturnValue>
+  </file>
+  <file src="test/ComposerRequireCheckerTest/PharTest.php">
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getcwd()]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
   </file>
   <file src="test/ComposerRequireCheckerTest/UsedSymbolsLocator/LocateUsedSymbolsFromASTRootsTest.php">
     <InvalidArgument>
