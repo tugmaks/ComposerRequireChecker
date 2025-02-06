@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ComposerRequireCheckerTest\NodeVisitor;
 
 use ComposerRequireChecker\NodeVisitor\UsedSymbolCollector;
+use PhpParser\Modifiers;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
 use PhpParser\Node\Expr\FuncCall;
@@ -181,7 +182,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testFunctionParameterType(): void
     {
-        $functionName       = new Name('foo');
+        $functionName       = new Identifier('foo');
         $node               = new Function_($functionName);
         $node->name         = $functionName;
         $param              = new Param(new Variable('bar'));
@@ -200,7 +201,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testMethodParameterType(): void
     {
-        $functionName = new Name('foo');
+        $functionName = new Identifier('foo');
         $node         = new ClassMethod($functionName);
         $node->name   = $functionName;
         $param        = new Param(new Variable('bar'));
@@ -216,7 +217,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testFunctionReturnType(): void
     {
-        $functionName     = new Name('foo');
+        $functionName     = new Identifier('foo');
         $node             = new Function_($functionName);
         $node->returnType = new Name('Bar');
 
@@ -229,7 +230,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testFunctionReturnTypeWithIdentifier(): void
     {
-        $functionName     = new Name('foo');
+        $functionName     = new Identifier('foo');
         $node             = new Function_($functionName);
         $node->returnType = new Identifier('Bar');
 
@@ -242,7 +243,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testMethodReturnType(): void
     {
-        $functionName     = new Name('foo');
+        $functionName     = new Identifier('foo');
         $node             = new ClassMethod($functionName);
         $node->returnType = new Name('Bar');
 
@@ -279,7 +280,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testTraitUseVisibilityAdaptation(): void
     {
-        $traitUseAdaption = new Alias(null, 'testMethod', Class_::MODIFIER_PUBLIC, null);
+        $traitUseAdaption = new Alias(null, 'testMethod', Modifiers::PUBLIC, null);
         $traitUse         = new TraitUse([new Name('Foo')], [$traitUseAdaption]);
 
         $this->visitor->enterNode($traitUse);
@@ -292,7 +293,7 @@ final class UsedSymbolCollectorTest extends TestCase
     public function testTraitUsePrecedenceAdaptation(): void
     {
         $traitUseAdaption2 = new Precedence(new Name('Bar'), 'testMethod', [new Name('Baz')]);
-        $traitUseAdaption  = new Alias(null, 'testMethod2', Class_::MODIFIER_PUBLIC, null);
+        $traitUseAdaption  = new Alias(null, 'testMethod2', Modifiers::PUBLIC, null);
         $traitUse          = new TraitUse([new Name('Foo')], [$traitUseAdaption, $traitUseAdaption2]);
 
         $this->visitor->enterNode($traitUse);
@@ -317,7 +318,7 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testPropertyType(): void
     {
-        $node       = new Property(Class_::MODIFIER_PUBLIC, []);
+        $node       = new Property(Modifiers::PUBLIC, []);
         $node->type = new Name('Bar');
 
         $this->visitor->enterNode($node);
@@ -329,8 +330,8 @@ final class UsedSymbolCollectorTest extends TestCase
 
     public function testIgnoresNonNamePropertyType(): void
     {
-        $node       = new Property(Class_::MODIFIER_PUBLIC, []);
-        $node->type = 'Bar';
+        $node       = new Property(Modifiers::PUBLIC, []);
+        $node->type = new Identifier('Bar');
 
         $this->visitor->enterNode($node);
 

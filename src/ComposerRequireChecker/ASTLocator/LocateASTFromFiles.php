@@ -35,6 +35,7 @@ final class LocateASTFromFiles
             }
 
             try {
+                /** @psalm-suppress PossiblyFalseArgument */
                 $stmts = $this->parser->parse(file_get_contents($file), $this->errorHandler);
             } catch (Error $e) {
                 // Convert the parse error into one which has the file information

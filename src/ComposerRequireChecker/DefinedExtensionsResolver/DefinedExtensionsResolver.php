@@ -20,7 +20,10 @@ class DefinedExtensionsResolver
      */
     public function __invoke(string $composerJson, array $phpCoreExtensions = []): array
     {
-        /** @var array<string, string> $requires */
+        /**
+         * @var array<string, string> $requires
+         * @psalm-suppress PossiblyFalseArgument
+         */
         $requires = json_decode(file_get_contents($composerJson), true)['require'] ?? [];
 
         $extensions           = [];

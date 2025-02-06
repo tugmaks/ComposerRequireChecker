@@ -32,7 +32,7 @@ final class DefinedSymbolCollectorFunctionalTest extends TestCase
     protected function setUp(): void
     {
         $this->collector = new DefinedSymbolCollector();
-        $this->parser    = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+        $this->parser    = (new ParserFactory())->createForHostVersion();
         $this->traverser = new NodeTraverser();
 
         $this->traverser->addVisitor(new NameResolver());
@@ -156,6 +156,7 @@ final class DefinedSymbolCollectorFunctionalTest extends TestCase
     /** @return array<Node> */
     private function traverseClassAST(string $className): array
     {
+        /** @psalm-suppress PossiblyFalseArgument */
         return $this->traverser->traverse($this->parser->parse(
             file_get_contents((new ReflectionClass($className))->getFileName()),
         ));

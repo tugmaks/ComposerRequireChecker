@@ -63,7 +63,8 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+        /** @psalm-suppress PossiblyFalseArgument */
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
         $this->assertSame($expectedFile, $actualFile);
     }
 
@@ -89,7 +90,8 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('alternate-vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+        /** @psalm-suppress PossiblyFalseArgument */
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
         $this->assertSame($expectedFile, $actualFile);
     }
 
@@ -104,7 +106,8 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+        /** @psalm-suppress PossiblyFalseArgument */
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
         $this->assertSame($expectedFile, $actualFile);
 
         // Ensure we didn't leave our temporary composer.json lying around
@@ -125,7 +128,8 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+        /** @psalm-suppress PossiblyFalseArgument */
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
         $this->assertSame($expectedFile, $actualFile);
 
         // Ensure we didn't leave our temporary composer.json lying around

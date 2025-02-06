@@ -60,6 +60,7 @@ final class OptionsTest extends TestCase
     {
         $options = new Options();
 
+        /** @psalm-suppress PossiblyFalseArgument */
         $optionsFromFile = new Options(
             json_decode(file_get_contents(
                 __DIR__ . '/../../../data/config.dist.json',

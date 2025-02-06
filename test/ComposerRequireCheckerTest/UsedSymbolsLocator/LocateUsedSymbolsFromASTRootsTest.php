@@ -56,9 +56,11 @@ final class LocateUsedSymbolsFromASTRootsTest extends TestCase
 
         $parserFactory = new ParserFactory();
 
-        $parser = $parserFactory->create(ParserFactory::PREFER_PHP7);
+        $parser = $parserFactory->createForHostVersion();
 
+        /** @psalm-suppress PossiblyFalseArgument */
         $ast1 = $parser->parse(file_get_contents(__DIR__ . '/../../fixtures/unknownSymbols/src/OtherThing.php'));
+        /** @psalm-suppress PossiblyFalseArgument */
         $ast2 = $parser->parse(file_get_contents(__DIR__ . '/../../fixtures/unknownSymbols/src/YetAnotherThing.php'));
 
         $symbols = $this->locate([$ast1, $ast2]);

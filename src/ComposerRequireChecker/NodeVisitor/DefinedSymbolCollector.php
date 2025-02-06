@@ -6,10 +6,10 @@ namespace ComposerRequireChecker\NodeVisitor;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
+use ReflectionProperty;
 use UnexpectedValueException;
 
 use function array_keys;
-use function property_exists;
 use function sprintf;
 
 final class DefinedSymbolCollector extends NodeVisitorAbstract
@@ -136,10 +136,8 @@ final class DefinedSymbolCollector extends NodeVisitorAbstract
     /** @psalm-param Node\Stmt\Function_|Node\Stmt\ClassLike|Node\Const_ $node */
     private function recordDefinitionOf(Node $node): void
     {
-        $namespacedName = null;
-        if (property_exists($node, 'namespacedName')) {
-            $namespacedName = $node->namespacedName;
-        }
+        $isNamespacedNameInitialized = (new ReflectionProperty($node, 'namespacedName'))->isInitialized($node);
+        $namespacedName              = $isNamespacedNameInitialized ? $node->namespacedName : null;
 
         if ($namespacedName === null) {
             throw new UnexpectedValueException(

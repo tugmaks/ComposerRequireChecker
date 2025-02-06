@@ -24,7 +24,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use LogicException;
 use PhpParser\ErrorHandler\Collecting as CollectingErrorHandler;
-use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -273,7 +272,7 @@ class CheckCommand extends Command
     private function getASTFromFilesLocator(InputInterface $input): LocateASTFromFiles
     {
         $errorHandler = $input->getOption('ignore-parse-errors') ? new CollectingErrorHandler() : null;
-        $parser       = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Lexer());
+        $parser       = (new ParserFactory())->createForHostVersion();
 
         return new LocateASTFromFiles($parser, $errorHandler);
     }
