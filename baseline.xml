@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
+<files psalm-version="6.4.0@04f312ac6ea48ba1c3e5db4d815bf6d74641c0ee">
   <file src="src/ComposerRequireChecker/Cli/CheckCommand.php">
     <MixedArgumentTypeCoercion>
       <code><![CDATA[(new ComposeGenerators())->__invoke(
@@ -30,9 +30,7 @@
   </file>
   <file src="test/ComposerRequireCheckerTest/Cli/OptionsTest.php">
     <MixedArgument>
-      <code><![CDATA[json_decode(file_get_contents(
-                __DIR__ . '/../../../data/config.dist.json',
-            ), true)]]></code>
+      <code><![CDATA[json_decode($fileContent, true)]]></code>
     </MixedArgument>
   </file>
   <file src="test/ComposerRequireCheckerTest/DefinedSymbolsLocator/LocateDefinedSymbolsFromASTRootsTest.php">
@@ -132,21 +130,13 @@
       <code><![CDATA[$className]]></code>
     </ArgumentTypeCoercion>
     <PossiblyNullArgument>
-      <code><![CDATA[$this->parser->parse(
-            file_get_contents((new ReflectionClass($className))->getFileName()),
-        )]]></code>
+      <code><![CDATA[$this->parser->parse($fileContent)]]></code>
       <code><![CDATA[$this->parser->parse('<?php ' . $phpSource)]]></code>
     </PossiblyNullArgument>
     <UnusedReturnValue>
       <code><![CDATA[array<Node>]]></code>
       <code><![CDATA[array<Node>]]></code>
     </UnusedReturnValue>
-  </file>
-  <file src="test/ComposerRequireCheckerTest/NodeVisitor/DefinedSymbolCollectorTest.php">
-    <ImplicitToStringCast>
-      <code><![CDATA[new Name('CONST_A')]]></code>
-      <code><![CDATA[new Name('CONST_B')]]></code>
-    </ImplicitToStringCast>
   </file>
   <file src="test/ComposerRequireCheckerTest/NodeVisitor/UsedSymbolCollectorFunctionalTest.php">
     <ArgumentTypeCoercion>
@@ -165,19 +155,10 @@
       <code><![CDATA[array<Stmt>]]></code>
     </UnusedReturnValue>
   </file>
-  <file src="test/ComposerRequireCheckerTest/NodeVisitor/UsedSymbolCollectorTest.php">
-    <ImplicitToStringCast>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA[$functionName]]></code>
-    </ImplicitToStringCast>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA[$functionName]]></code>
-      <code><![CDATA['Bar']]></code>
-    </InvalidPropertyAssignmentValue>
+  <file src="test/ComposerRequireCheckerTest/PharTest.php">
+    <PossiblyFalsePropertyAssignmentValue>
+      <code><![CDATA[getcwd()]]></code>
+    </PossiblyFalsePropertyAssignmentValue>
   </file>
   <file src="test/ComposerRequireCheckerTest/UsedSymbolsLocator/LocateUsedSymbolsFromASTRootsTest.php">
     <InvalidArgument>

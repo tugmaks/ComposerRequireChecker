@@ -12,8 +12,10 @@ use PhpParser\Parser;
 use RuntimeException;
 use Traversable;
 
+use function assert;
 use function file_get_contents;
 use function is_file;
+use function is_string;
 use function sprintf;
 
 final class LocateASTFromFiles
@@ -35,7 +37,10 @@ final class LocateASTFromFiles
             }
 
             try {
-                $stmts = $this->parser->parse(file_get_contents($file), $this->errorHandler);
+                $fileContent = file_get_contents($file);
+                assert(is_string($fileContent));
+
+                $stmts = $this->parser->parse($fileContent, $this->errorHandler);
             } catch (Error $e) {
                 // Convert the parse error into one which has the file information
                 throw new FileParseFailed($file, $e);

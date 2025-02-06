@@ -63,7 +63,11 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+
+        $firstFile = reset($files);
+        $this->assertNotFalse($firstFile);
+
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $firstFile);
         $this->assertSame($expectedFile, $actualFile);
     }
 
@@ -89,7 +93,11 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('alternate-vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+
+        $firstFile = reset($files);
+        $this->assertNotFalse($firstFile);
+
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $firstFile);
         $this->assertSame($expectedFile, $actualFile);
     }
 
@@ -104,7 +112,11 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+
+        $firstFile = reset($files);
+        $this->assertNotFalse($firstFile);
+
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $firstFile);
         $this->assertSame($expectedFile, $actualFile);
 
         // Ensure we didn't leave our temporary composer.json lying around
@@ -125,7 +137,11 @@ final class LocateComposerPackageDirectDependenciesSourceFilesTest extends TestC
         $this->assertCount(1, $files);
 
         $expectedFile = $this->path('vendor/foo/bar/src/MyClass.php');
-        $actualFile   = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, reset($files));
+
+        $firstFile = reset($files);
+        $this->assertNotFalse($firstFile);
+
+        $actualFile = str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $firstFile);
         $this->assertSame($expectedFile, $actualFile);
 
         // Ensure we didn't leave our temporary composer.json lying around

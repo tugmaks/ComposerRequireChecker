@@ -6,7 +6,9 @@ namespace ComposerRequireChecker\DefinedExtensionsResolver;
 
 use function array_keys;
 use function array_merge;
+use function assert;
 use function file_get_contents;
+use function is_string;
 use function json_decode;
 use function str_starts_with;
 use function substr;
@@ -20,8 +22,11 @@ class DefinedExtensionsResolver
      */
     public function __invoke(string $composerJson, array $phpCoreExtensions = []): array
     {
+        $composerJsonContents = file_get_contents($composerJson);
+        assert(is_string($composerJsonContents));
+
         /** @var array<string, string> $requires */
-        $requires = json_decode(file_get_contents($composerJson), true)['require'] ?? [];
+        $requires = json_decode($composerJsonContents, true)['require'] ?? [];
 
         $extensions           = [];
         $addPhpCoreExtensions = false;

@@ -112,8 +112,8 @@ final class DefinedSymbolCollectorTest extends TestCase
     public function testRecordConstDefinition(): void
     {
         $node = new Const_([
-            new \PhpParser\Node\Const_(new Name('CONST_A'), new String_('foo')),
-            new \PhpParser\Node\Const_(new Name('CONST_B'), new String_('foo')),
+            new \PhpParser\Node\Const_(new Identifier('CONST_A'), new String_('foo')),
+            new \PhpParser\Node\Const_(new Identifier('CONST_B'), new String_('foo')),
         ]);
         $this->traverser->traverse([$node]);
 
