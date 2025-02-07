@@ -32,7 +32,7 @@ jobs:
               run: "composer install --no-interaction --no-progress --no-suggest"
 
             - name: "Build and sign phar file via phing"
-              run: "vendor/bin/phing phar-build phar-sign"
+              run: "vendor/bin/phing phar-build-release"
 
             - name: "Upload phar file artifact"
               uses: actions/upload-artifact@v4
